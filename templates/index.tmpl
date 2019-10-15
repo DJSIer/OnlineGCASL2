@@ -3,11 +3,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
     <body>
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand" href="#">GCASL Online</a>
+    <nav class="navbar navbar-dark bg-dark">
+      <span class="navbar-brand mb-0 h1">GCASL2 Online</span>
     </nav>
-</br>
-</br>
 <div class="container-fluid">
   <div class="row">
   <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -48,7 +46,7 @@
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="#LD">
               LD
             </a>
           </li>
@@ -74,11 +72,88 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">API</h1>
       </div>
-      <h2>Load,Store, LOadAddress Order [/GCASL]</h2>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Load,Store,LoadAddress Order [/GCASL]</h1>
+      </div>
+      <div id="LD">
       <h3>LD [POST]</h3>
+      </div>
+      <p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Order</th>
+              <th scope="col">Write</th>
+              <th scope="col">Detail</th>
+              <th scope="col">OP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th rowspan="2">Load</th>
+              <td>LD r1, r2</td>
+              <td>r1 ← (r2)</td>
+              <td>0x14</td>
+            </tr>
+            <tr>
+              <td>LD r1, adr [,x]</td>
+              <td>r1 ← (実行アドレス)</td>
+              <td>0x10</td>
+            </tr>
+          </tbody>
+        </table>
+      </p>
+      <h3>Attributes</h3>
+      <p>code: (string,optional) - CASL2 Source Code</p>
+      <h3>Exsample 1</h3>
       <div class="card">
         <div class="card-body">
+        <code>
+          {
+            "code": "LD GR1,GR2"
+          }
+        </code>
         </div>
+      </div>
+      <h3>Response 200 (application/json)</h3>
+      <div class="card">
+        <div class="card-body">
+        <code>
+        {
+          "result":"OK",
+          "code" :[
+            {
+              "Code":5138,
+              "Addr":0,
+              "AddrLabel":"",
+              "Op":20,
+              "Length":1,
+              "Token":{
+                  "Literal":"LD"
+              }
+            }
+          ]   
+          }
+        </code>
+        </div>
+        <h3>Exsample Request2</h3>
+        <div class="card">
+        <div class="card-body">
+        <code>
+          {
+            "code": "LD GR1,0100"
+          }
+        </code>
+        </div>
+      </div>
+      <h3>Response 200 (application/json)</h3>
+      <div class="card">
+        <div class="card-body">
+        <code>
+        {"result":"OK","code" :[{"Code":4112,"Addr":64,"AddrLabel":"","Op":16,"Length":2,"Token":{"Literal":"LD"}}]}
+        </code>
+        </div>
+
       </div>
 
     </main>
