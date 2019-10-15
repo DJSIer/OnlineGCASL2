@@ -1,13 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"os"
+	"strconv"
 )
 
-func main() {
-	router := gin.Default()
+/*func main() {
+	/outer := gin.Default()
 	router.LoadHTMLGlob("templates/*")
 	//router.LoadHTMLFiles("templates/template1.html", "templates/template2.html")
 	router.GET("/", func(c *gin.Context) {
@@ -16,4 +17,16 @@ func main() {
 		})
 	})
 	router.Run(":8080")
+
+}*/
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello world\n")
+}
+
+func main() {
+	port, _ := strconv.Atoi(os.Args[1])
+	fmt.Printf("Starting server at Port %d", port)
+	http.HandleFunc("/", handler)
+	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+
 }
