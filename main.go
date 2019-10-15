@@ -1,7 +1,9 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,8 +22,11 @@ import (
 }*/
 
 func main() {
-	port := "8080"
+	port := os.Getenv("PORT")
 
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
 	router := gin.New()
 	router.Use(gin.Logger())
 
