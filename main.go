@@ -9,7 +9,7 @@ import (
 )
 
 /*func main() {
-	/outer := gin.Default()
+	outer := gin.Default()
 	router.LoadHTMLGlob("templates/*")
 	//router.LoadHTMLFiles("templates/template1.html", "templates/template2.html")
 	router.GET("/", func(c *gin.Context) {
@@ -27,12 +27,13 @@ func main() {
 	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
-	router := gin.New()
-	router.Use(gin.Logger())
-
+	router := gin.Default()
+	router.LoadHTMLGlob("templates/*")
+	//router.LoadHTMLFiles("templates/template1.html", "templates/template2.html")
 	router.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "Hello, World!")
+		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			"title": "Main website",
+		})
 	})
-
 	router.Run(":" + port)
 }
