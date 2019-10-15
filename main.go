@@ -1,10 +1,14 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
 
+	"github.com/DJSIer/GCASL2/lexer"
+	"github.com/DJSIer/GCASL2/parser"
 	"github.com/gin-gonic/gin"
 )
 
@@ -34,6 +38,40 @@ func main() {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
 			"title": "Main website",
 		})
+	})
+	router.POST("/GCASL", func(c *gin.Context) {
+		postCode := c.PostForm("code")
+		lex := lexer.New(postCode)
+		p := parser.New(lex)
+		code, err := p.ParseProgram()
+		if err != nil {
+			var buf bytes.Buffer
+			b, _ := json.Marshal(p.Errors())
+			buf.Write(b)
+			c.JSON(200, gin.H{
+				"result": "NG",
+				"error":  buf.String(),
+			})
+		} else {
+			code, err = p.LabelToAddress(code)
+			if err != nil {
+				var buf bytes.Buffer
+				b, _ := json.Marshal(p.Errors())
+				buf.Write(b)
+				c.JSON(200, gin.H{
+					"result": "NG",
+					"error":  buf.String(),
+				})
+			} else {
+				var buf bytes.Buffer
+				b, _ := json.Marshal(code)
+				buf.Write(b)
+				c.JSON(200, gin.H{
+					"result": "OK",
+					"code":   buf.String(),
+				})
+			}
+		}
 	})
 	router.Run(":" + port)
 }
