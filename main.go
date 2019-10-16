@@ -33,10 +33,10 @@ func main() {
 	}
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
-	//router.LoadHTMLFiles("templates/template1.html", "templates/template2.html")
+
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"title": "Main website",
+			"title": "GCASL Online",
 		})
 	})
 	router.POST("/GCASL", func(c *gin.Context) {

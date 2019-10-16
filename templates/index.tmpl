@@ -1,5 +1,6 @@
 <html>
 <head>
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
     <body>
@@ -76,7 +77,7 @@
         <h1 class="h2">Load,Store,LoadAddress Order [/GCASL]</h1>
       </div>
       <div id="LD">
-      <h3>LD [POST]</h3>
+        <h3>LD [POST]</h3>
       </div>
       <p>
         <table class="table">
@@ -105,61 +106,88 @@
       </p>
       <h3>Attributes</h3>
       <p>code: (string,optional) - CASL2 Source Code</p>
-      <h3>Exsample 1</h3>
+      <h3>Exsample 1      	<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+</h3>
       <div class="card">
+
         <div class="card-body">
-        <code>
-          {
-            "code": "LD GR1,GR2"
-          }
-        </code>
+          <code>
+            {
+              "code": "LD GR1,GR2"
+            }
+          </code>
         </div>
       </div>
+
       <h3>Response 200 (application/json)</h3>
       <div class="card">
         <div class="card-body">
-        <code>
-        {
-          "result":"OK",
-          "code" :[
-            {
-              "Code":5138,
-              "Addr":0,
-              "AddrLabel":"",
-              "Op":20,
-              "Length":1,
-              "Token":{
-                  "Literal":"LD"
+          <code>
+          {
+            "result":"OK",
+            "code" :[
+              {
+                "Code":5138,
+                "Addr":0,
+                "AddrLabel":"",
+                "Op":20,
+                "Length":1,
+                "Token":{
+                    "Literal":"LD"
+                }
               }
-            }
-          ]   
+            ]   
           }
-        </code>
+          </code>
+        </div>
         </div>
         <h3>Exsample Request2</h3>
         <div class="card">
-        <div class="card-body">
-        <code>
-          {
-            "code": "LD GR1,0100"
-          }
-        </code>
+          <div class="card-body">
+          <code>
+            {
+              "code": "LD GR1,0100"
+            }
+          </code>
         </div>
       </div>
       <h3>Response 200 (application/json)</h3>
       <div class="card">
         <div class="card-body">
         <code>
-        {"result":"OK","code" :[{"Code":4112,"Addr":64,"AddrLabel":"","Op":16,"Length":2,"Token":{"Literal":"LD"}}]}
+          {"result":"OK","code" :[{"Code":4112,"Addr":64,"AddrLabel":"","Op":16,"Length":2,"Token":{"Literal":"LD"}}]}
         </code>
-        </div>
-
       </div>
-
+      </div>
+      <!--LAD-->
+      <div id="LD">
+        <h3>LAD [POST]</h3>
+      </div>
+      <p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Order</th>
+              <th scope="col">Write</th>
+              <th scope="col">Detail</th>
+              <th scope="col">OP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Load</th>
+              <td>LAD r, adr [,x]</td>
+              <td>r1 ← 実行アドレス</td>
+              <td>0x12</td>
+            </tr>
+          </tbody>
+        </table>
+      </p>
     </main>
   </div>
 </div>
 </body>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
