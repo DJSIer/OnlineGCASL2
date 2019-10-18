@@ -40,6 +40,7 @@ func main() {
 		})
 	})
 	router.POST("/GCASL", func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin", "*")
 		postCode := c.PostForm("code")
 		lex := lexer.New(postCode)
 		p := parser.New(lex)
