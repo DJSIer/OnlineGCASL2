@@ -24,7 +24,7 @@ import (
 	router.Run(":8080")
 
 }*/
-const version = "0.1"
+const version = "0.1.1"
 
 func main() {
 	port := os.Getenv("PORT")
