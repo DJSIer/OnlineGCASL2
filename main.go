@@ -43,6 +43,7 @@ func main() {
 				"error":  buf.String(),
 			})
 		} else {
+			code, err = p.LiteralToMemory(code)
 			code, err = p.LabelToAddress(code)
 			if err != nil {
 				var buf bytes.Buffer
