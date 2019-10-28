@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const version = "0.1.14"
+const version = "0.1.15"
 
 func main() {
 	port := os.Getenv("PORT")
