@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const version = "0.1.17"
+const version = "0.1.18"
 
 func main() {
 	port := os.Getenv("PORT")
@@ -58,8 +58,9 @@ func main() {
 				b, _ := json.Marshal(code)
 				buf.Write(b)
 				c.JSON(200, gin.H{
-					"result": "OK",
-					"code":   buf.String(),
+					"result":  "OK",
+					"code":    buf.String(),
+					"warning": "",
 				})
 			}
 		}
