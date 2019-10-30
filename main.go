@@ -66,4 +66,5 @@ func main() {
 		}
 	})
 	router.Run(":" + port)
+	open.Run("http://localhost:8080")
 }
