@@ -11,7 +11,7 @@ function onLoadExe() {
         //メモリレジスタスタック初期化
         initMemoryRegister();
         $.ajax({
-            url: 'http://localhost:8080/GCASL',
+            url: 'https://pure-wildwood-51127.herokuapp.com/GCASL2',
             type: 'POST',
             dataType: 'json',
             // フォーム要素の内容をハッシュ形式に変換
