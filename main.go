@@ -23,8 +23,8 @@ func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("WOCASL/*.html")
 	
-	router.Static("./assets","WOCASL2/assets")
-	router.Static("./src","WOCASL2/src")
+	router.Static("./assets","WOCASL/assets")
+	router.Static("./src","WOCASL/src")
 
 
 	router.GET("/", func(c *gin.Context) {
