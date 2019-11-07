@@ -11,10 +11,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const version = "0.1.18"
+const version = "0.1.19"
 
 func main() {
-	port := "8080"
+	port := os.Getenv("PORT")
 
 	if port == "" {
 		log.Fatal("$PORT must be set")
