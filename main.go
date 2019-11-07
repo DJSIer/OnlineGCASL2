@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/DJSIer/GCASL2/lexer"
 	"github.com/DJSIer/GCASL2/parser"
