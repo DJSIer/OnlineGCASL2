@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/DJSIer/GCASL2/lexer"
 	"github.com/DJSIer/GCASL2/parser"
@@ -15,16 +14,20 @@ import (
 const version = "0.1.18"
 
 func main() {
-	port := os.Getenv("PORT")
+	port := "8080"
 
 	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
 	router := gin.Default()
-	router.LoadHTMLGlob("templates/*")
+	router.LoadHTMLGlob("WOCASL2/*.html")
+	
+	router.Static("./assets","WOCASL2/assets")
+	router.Static("./src","WOCASL2/src")
+
 
 	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+		c.HTML(http.StatusOK, "index.html", gin.H{
 			"title": "GCASL Online",
 		})
 	})
