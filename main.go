@@ -21,7 +21,7 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 	router := gin.Default()
-	router.LoadHTMLGlob("WOCASL2/*.html")
+	router.LoadHTMLGlob("WOCASL/*.html")
 	
 	router.Static("./assets","WOCASL2/assets")
 	router.Static("./src","WOCASL2/src")

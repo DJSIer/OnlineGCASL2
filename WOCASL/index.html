@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <title>WOCASL2</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="./assets/css/main.css" rel="stylesheet"/>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-javascript.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/theme-twilight.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <script src="./src/editor.js"></script>
+  <script src="./src/table.js"></script>
+  <script src="./src/comet.js"></script>
+  <script src="./src/execution.js"></script>
+  
+</head>
+
+<body>
+  <div id="header_fixed">
+    <div class="btn-group" role="group" aria-label="File">
+      <button type="button" class="btn-sm btn-primary" id="btnLoad" data-toggle="tooltip" data-placement="bottom" title="ファイル読み込み">
+        <i class="fas fa-folder-open fa-lg"></i>
+      </button>
+      <button type="button" class="btn-sm btn-primary" id="btnSave" data-toggle="tooltip" data-placement="bottom" title="ファイルに保存">
+        <i class="fas fa-save fa-lg"></i>
+      </button>
+    </div>
+    <div class="btn-group" role="group" aria-label="Execution">
+      <button type="button" class="btn-sm btn-primary" id="btnReset" data-toggle="tooltip" data-placement="bottom" title="リセット">
+        <i class="fas fa-redo-alt fa-lg"></i>
+      <button type="button" class="btn-sm btn-primary" id="btnAssemble" data-toggle="tooltip" data-placement="bottom" title="アセンブル">
+        <i class="fas fa-microchip fa-lg"></i>
+      </button>
+      <button type="button" class="btn-sm btn-primary" id="btnStepBack" data-toggle="tooltip" data-placement="bottom" title="ステップバック">
+          <i class="fas fa-step-backward fa-lg"></i>
+      </button>
+      <button type="button" class="btn-sm btn-primary" id="btnExecution" data-toggle="tooltip" data-placement="bottom" title="実行する">
+          <i class="fas fa-play fa-lg"></i>
+      </button>
+      <button type="button" class="btn-sm btn-primary" id="btnStepExecution" data-toggle="tooltip" data-placement="bottom" title="ステップ実行">
+          <i class="fas fa-step-forward fa-lg"></i>
+      </button>
+      <button type="button" class="btn-sm btn-primary" id="btnStop" data-toggle="tooltip" data-placement="bottom" title="停止">
+          <i class="fas fa-stop fa-lg"></i>
+      </button>
+    </div>
+  </div>
+<!--ここからメイン部分-->
+<!--一番外側のdiv-->
+  <div id="input_leader">
+    <!--テキストエディタ表示用のdiv-->
+    <div id="input_area">
+      <!--テキストエディタ部分-->
+      <div id="input_txt"></div>
+    </div>
+
+    <!--レジスタとメモリ表示用のdiv-->
+    <div id="register_memory">
+      <!--メモリ表示-->
+       <div id="memory_area"></div>
+      <!--レジスタ表示-->
+      <div id="register_area">
+          <table border="1" width="100%" id="Registertable">
+              <tr bgcolor="#A6B3FF">
+                <th>Name</th>
+                <th>Hex</th>
+                <th>uDec</th>
+                <th>sDec</th>
+                <th colspan="3">Bin</th>
+              </tr>
+              <tr bgcolor="#00BCD4">
+                <td>PR</td>
+                <td>#0000</td>
+                <td>0</td>
+                <td>0</td>
+                <td colspan="3">0000 0000 0000 0000</td>
+              </tr>
+              <tr bgcolor="#EEBCD4">
+                  <td>SP</td>
+                  <td>#FFFF</td>
+                  <td>65535</td>
+                  <td>-1</td>
+                  <td colspan="3">1111 1111 1111 1111</td>
+              </tr>
+              <tr>
+                  <td>GR0</td>
+                  <td>#0000</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td colspan="3">0000 0000 0000 0000</td>
+              </tr>
+              <tr>
+                  <td>GR1</td>
+                  <td>#0000</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td colspan="3">0000 0000 0000 0000</td>
+              </tr>
+              <tr>
+                  <td>GR2</td>
+                  <td>#0000</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td colspan="3">0000 0000 0000 0000</td>
+              </tr>
+              <tr>
+                  <td>GR3</td>
+                  <td>#0000</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td colspan="3">0000 0000 0000 0000</td>
+              </tr>
+              <tr>
+                  <td>GR4</td>
+                  <td>#0000</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td colspan="3">0000 0000 0000 0000</td>
+              </tr>
+              <tr>
+                  <td>GR5</td>
+                  <td>#0000</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td colspan="3">0000 0000 0000 0000</td>
+              </tr>
+              <tr>
+                  <td>GR6</td>
+                  <td>#0000</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td colspan="3">0000 0000 0000 0000</td>
+              </tr>
+              <tr>
+                  <td>GR7</td>
+                  <td>#0000</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td colspan="3">0000 0000 0000 0000</td>
+              </tr>
+            </table>
+      </div>
+    </div>
+
+<!--COMET2とスタック表示用のdiv-->
+    <div id="comet_stack">
+      <!--ディスプレイ表示-->
+      <div id="comet_area">
+        <div id="canvas"></div>
+      </div>
+      <div id="flag_area">
+        <table border="1" width="100%" id="Flagtable">
+            <tr bgcolor="#A6B3FF">
+                <th>Name</th>
+                <th>Overflow</th>
+                <th>Sign</th>
+                <th>Zero</th>
+                <th>Overflow</th>
+                <th>Sign</th>
+                <th>Zero</th>
+              </tr>
+            <tr>
+                <td>Flags</td>
+                <td>〇</td>
+                <td>正</td>
+                <td>NonZ</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+        </table>
+      </div>
+      <!--スタック表示-->
+      <div id="stack_area"></div>
+    </div>
+  </div>
+<!--input Modal-->
+<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inputModalLabel">INPUT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">INPUT:</label>
+            <input type="text" class="form-control" id="input">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--エラーメッセージ用　Modal-->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content text-white bg-danger">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="okButton" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--サクセス　Modal-->
+  <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content text-warning bg-success">
+          <div class="modal-header">
+            <h5 class="modal-title" id="successModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">      
+          </div>
+          <div class="modal-footer">
+              <button type="button" id="okButton2" class="btn btn-primary" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--information Modal-->
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content text-white bg-info">
+            <div class="modal-header">
+              <h5 class="modal-title" id="infoModalLabel"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">      
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="okButton3" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
