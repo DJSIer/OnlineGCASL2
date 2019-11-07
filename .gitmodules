@@ -1,0 +1,3 @@
+[submodule "WOCASL2"]
+	path = WOCASL2
+	url = https://github.com/j16003/WOCASL2.git
