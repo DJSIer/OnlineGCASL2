@@ -25,17 +25,9 @@
 #   unused-packages = true
 
 
-[[constraint]]
-  branch = "master"
-  name = "github.com/DJSIer/GCASL2"
-
-[[constraint]]
-  name = "github.com/gin-gonic/gin"
-  version = "1.4.0"
-
 [prune]
   go-tests = true
   unused-packages = true
-  
+
 [metadata.heroku]
-  root-package = "github.com/j16003/OnlineGCASL2"
+  root-package = "github.com/DJSIer/OnlineGCASL2"
