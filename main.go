@@ -10,6 +10,7 @@ import (
 	"github.com/DJSIer/GCASL2/lexer"
 	"github.com/DJSIer/GCASL2/parser"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
 
 const version = "0.1.21"
@@ -47,8 +48,18 @@ func main() {
 	})
 	//debug : curl -F "code=value1" localhost:8080/GCASL2/add
 	router.POST("/GCASL2/add", func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin", "*")
+		db, err := gorm.Open("postgres", "host=myhost port=myport user=gorm dbname=gorm password=mypassword")
+		if err != nil {
+			c.JSON(200, gin.H{
+				"error": "DB Error",
+			})
+			return
+		}
+		defer db.Close()
 		postCode := c.PostForm("code")
-		c.JSON(200, gin.H{"code": postCode})
+
+		c.JSON(200, postCode)
 	})
 
 	router.POST("/GCASL", func(c *gin.Context) {
