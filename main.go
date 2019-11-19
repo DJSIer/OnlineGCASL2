@@ -88,13 +88,15 @@ func main() {
 					"error":  buf.String(),
 				})
 			} else {
-				var buf bytes.Buffer
+				var buf, warbuf bytes.Buffer
 				b, _ := json.Marshal(code)
 				buf.Write(b)
+				bb, _ := json.Marshal(p.Warnings())
+				warbuf.Write(bb)
 				c.JSON(200, gin.H{
 					"result":  "OK",
 					"code":    buf.String(),
-					"warning": "",
+					"warning": warbuf,
 				})
 			}
 		}
